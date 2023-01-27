@@ -9,8 +9,16 @@
 
 // add headers that you want to pre-compile here
 
+#include <string>
+#include <array>
+#include <algorithm>
+#include <utility>
+#include <numeric>
+#include <vector>
+#include <fstream>
+
 #ifdef DEBUG
-#define ASSERT(x) {if (!x) { printf("ASSERTION FAILED"); __debugbreak();}}
+#define ASSERT(x) {if (!x) { printf("ASSERTION FAILED"); __debugbreak();}};
 #else
 #define ASSERT(x)
 #endif
