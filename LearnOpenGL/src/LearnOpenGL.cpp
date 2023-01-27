@@ -5,9 +5,15 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+
 const GLint WIDTH = 800, HEIGHT = 600;
 
-GLuint VAO{}, VBO{}, shader{};
+GLuint VAO{}, VBO{}, shader{}, uniformXMove{};
+
+bool direction = true;
+float triOffset = 0.f;
+float triMaxOffset = .7f;
+float triIncrement = 0.0005f;
 
 std::string ReadShaderFile(const std::string& src)
 {
@@ -102,6 +108,8 @@ void CompileShader()
 
 		__debugbreak();
 	}
+
+	uniformXMove = glGetUniformLocation(shader, "xMove");
 }
 
 void CreateTriangle()
@@ -167,11 +175,27 @@ int main()
 		// Get + Handle user input events
 		glfwPollEvents();
 
+		if (direction)
+		{
+			triOffset += triIncrement;
+		}
+		else
+		{
+			triOffset -= triIncrement;
+		}
+
+		if (std::abs(triOffset) >= triMaxOffset)
+		{
+			direction = !direction;
+		}
+
 		// Clear window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shader);
+		glUniform1f(uniformXMove, triOffset);
+
 
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
