@@ -28,6 +28,8 @@ project "LearnOpenGL"
 
     includedirs
     {
+        -- Self include for global access
+        "%{prj.name}/src",
         "%{prj.name}/Externals/includes"
     }
 
