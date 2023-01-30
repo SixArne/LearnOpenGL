@@ -1,6 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "pch.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -18,6 +19,11 @@ public:
 	bool GetShouldClose() { return glfwWindowShouldClose(m_MainWindow); };
 	void SwapBuffers() { glfwSwapBuffers(m_MainWindow); };
 
+	// reference to key list
+	std::array<bool, 1024>& GetKeys() { return m_Keys; };
+	GLfloat GetXChange();
+	GLfloat GetYChange();
+
 	~Window();
 
 private:
@@ -26,6 +32,21 @@ private:
 	GLint m_Height{};
 	GLint m_BufferWidth{};
 	GLint m_BufferHeight{};
+	
+	// keyboard
+	std::array<bool, 1024> m_Keys{false};
+	
+	// mouse
+	GLfloat m_LastX{};
+	GLfloat m_LastY{};
+	GLfloat m_XChange{};
+	GLfloat m_YChange{};
+	bool m_MouseFirstMoved{};
+
+	// Event callbacks
+	void CreateCallbacks();
+	static void HandleKeys(GLFWwindow* window, int key, int code, int action, int mode);
+	static void HandleMouse(GLFWwindow* window, double xPos, double yPos);
 };
 
 

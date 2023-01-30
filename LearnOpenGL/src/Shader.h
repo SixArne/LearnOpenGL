@@ -14,6 +14,7 @@ public:
 	void CreateFromFiles(const std::string& vertFileLocation, const std::string& fragFileLocation);
 	GLuint GetProjectionLocation();
 	GLuint GetModelLocation();
+	GLuint GetViewLocation();
 
 	void UseShader();
 	void ClearShader();
@@ -22,6 +23,7 @@ private:
 	GLuint m_ShaderID{};
 	GLuint m_UniformProjection{};
 	GLuint m_UniformModel{};
+	GLuint m_UniformView{};
 
 	void CompileShader(const std::string& vertexCode, const std::string& fragmentCode);
 	void AddShader(GLuint program, const std::string& code, GLenum type);

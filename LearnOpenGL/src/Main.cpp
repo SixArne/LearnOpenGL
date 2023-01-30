@@ -14,7 +14,6 @@
 #include "Shader.h"
 #include "Window/Window.h"
 
-
 const float toRadians = 3.14159265f / 180.f;
 
 Window mainWindow{};
@@ -61,8 +60,10 @@ int main()
 	CreateObjects();
 	CreateShaders();
 
+	// Initialize Logger
+	L_CREATE();
 
-	GLuint uniformProjection{}, uniformModel{};
+	GLuint uniformProjection{}, uniformModel{}, uniformView{};
 	glm::mat4 projection{};
 	projection = glm::perspective(45.f, mainWindow.GetBufferWidth() / mainWindow.GetBufferHeight(), 0.1f, 100.f);
 
@@ -85,13 +86,18 @@ int main()
 		shaders[0]->UseShader();
 		uniformModel = shaders[0]->GetModelLocation();
 		uniformProjection = shaders[0]->GetProjectionLocation();
+		uniformView = shaders[0]->GetViewLocation();
 
 		glm::mat4 model{1.0f};
 		model = glm::translate(model, glm::vec3{ 0, 0, -1.f });
 		model = glm::scale(model, glm::vec3{.4f, .4f, 0.f});
-		//model = glm::rotate(model, curAngle * toRadians, glm::vec3{0,1,0});
+		model = glm::rotate(model, curAngle * toRadians, glm::vec3{0,1,1});
+
+		glm::mat4 view{ 1.0f };
+		
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(view));
 
 		meshes[0]->Render();
 

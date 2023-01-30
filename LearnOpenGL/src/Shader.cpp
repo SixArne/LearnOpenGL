@@ -2,7 +2,7 @@
 #include "Shader.h"
 
 Shader::Shader()
-	:m_ShaderID{}, m_UniformModel{}, m_UniformProjection{}
+	:m_ShaderID{}, m_UniformModel{}, m_UniformProjection{}, m_UniformView{}
 {}
 
 Shader::~Shader()
@@ -51,6 +51,11 @@ GLuint Shader::GetProjectionLocation()
 GLuint Shader::GetModelLocation()
 {
 	return m_UniformModel;
+}
+
+GLuint Shader::GetViewLocation()
+{
+	return m_UniformView;
 }
 
 void Shader::UseShader()
@@ -109,6 +114,7 @@ void Shader::CompileShader(const std::string& vertexCode, const std::string& fra
 	// Get uniform properties from shader
 	m_UniformModel = glGetUniformLocation(m_ShaderID, "model");
 	m_UniformProjection = glGetUniformLocation(m_ShaderID, "projection");
+	m_UniformView = glGetUniformLocation(m_ShaderID, "view");
 }
 
 void Shader::AddShader(GLuint program, const std::string& code, GLenum type)

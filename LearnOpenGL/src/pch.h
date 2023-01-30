@@ -17,6 +17,9 @@
 #include <vector>
 #include <fstream>
 
+#include "Config.h"
+#include "Logger/Log.h"
+
 #ifdef DEBUG
 #define ASSERT(x) {if (!x) { printf("ASSERTION FAILED"); __debugbreak();}};
 #else
