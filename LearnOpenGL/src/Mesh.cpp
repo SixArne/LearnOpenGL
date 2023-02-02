@@ -20,21 +20,47 @@
 
 		{
 			glGenBuffers(1, &m_IBO);
+
+			auto indexVectorSize = sizeof(GLfloat) * indices.size();
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexVectorSize, indices.data(), GL_STATIC_DRAW);
 
 			glGenBuffers(1, &m_VBO);
+
+			auto vertexVectorSize = sizeof(unsigned int) * vertices.size();
 			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-			{
-				// Set buffer data vertices and indices
-				auto indexVectorSize = sizeof(GLfloat) * indices.size();
-				auto vertexVectorSize = sizeof(unsigned int) * vertices.size();
+			glBufferData(GL_ARRAY_BUFFER, vertexVectorSize, vertices.data(), GL_STATIC_DRAW);
 
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexVectorSize, indices.data(), GL_STATIC_DRAW);
-				glBufferData(GL_ARRAY_BUFFER, vertexVectorSize, vertices.data(), GL_STATIC_DRAW);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+			glEnableVertexAttribArray(0);
 
-				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-				glEnableVertexAttribArray(0);
-			}
+			// Unbind
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		}
+		glBindVertexArray(0);
+	}
+
+	void Mesh::Create(GLfloat* vertices, int vSize, unsigned int* indices, int iSize)
+	{
+		m_IndexCount = iSize;
+
+		glGenVertexArrays(1, &m_VAO);
+		glBindVertexArray(m_VAO);
+
+		{
+			glGenBuffers(1, &m_IBO);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices[0]) * iSize, indices, GL_STATIC_DRAW);
+
+			glGenBuffers(1, &m_VBO);
+
+			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices[0]) * vSize, vertices, GL_STATIC_DRAW);
+
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+			glEnableVertexAttribArray(0);
 
 			// Unbind
 			glBindBuffer(GL_ARRAY_BUFFER, 0);

@@ -24,6 +24,9 @@ public:
 	GLfloat GetXChange();
 	GLfloat GetYChange();
 
+	GLFWwindow* GetWindow() { return m_MainWindow; };
+	bool IsFocussed() { return m_IsFocussed; };
+
 	~Window();
 
 private:
@@ -41,7 +44,8 @@ private:
 	GLfloat m_LastY{};
 	GLfloat m_XChange{};
 	GLfloat m_YChange{};
-	bool m_MouseFirstMoved{};
+	bool m_MouseFirstMoved{true};
+	bool m_IsFocussed{ true };
 
 	// Event callbacks
 	void CreateCallbacks();

@@ -51,6 +51,8 @@ int Window::Initialize()
 
 	// attach current window data to window.
 	glfwSetWindowUserPointer(m_MainWindow, this);
+
+	return 0;
 }
 
 Window::~Window()
@@ -90,6 +92,20 @@ void Window::HandleKeys(GLFWwindow* window, int key, int code, int action, int m
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 
+	if (key == GLFW_KEY_RIGHT_SHIFT && action == GLFW_RELEASE)
+	{
+		if (thisWindow->m_IsFocussed)
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			thisWindow->m_IsFocussed = false;
+		}
+		else
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			thisWindow->m_IsFocussed = true;
+		}
+	}
+
 	// If valid key
 	if (key >= 0 && key <= 1024)
 	{
@@ -113,7 +129,7 @@ void Window::HandleMouse(GLFWwindow* window, double xPos, double yPos)
 		thisWindow->m_LastX = xPos;
 		thisWindow->m_LastY = yPos;
 
-		thisWindow->m_MouseFirstMoved = true;
+		thisWindow->m_MouseFirstMoved = false;
 	}
 
 	thisWindow->m_XChange = xPos - thisWindow->m_LastX;

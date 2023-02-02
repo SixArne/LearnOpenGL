@@ -23,14 +23,16 @@ project "LearnOpenGL"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/Externals/includes/imgui/**.h",
+        "%{prj.name}/Externals/includes/imgui/**.cpp",
     }
 
     includedirs
     {
         -- Self include for global access
         "%{prj.name}/src",
-        "%{prj.name}/Externals/includes"
+        "%{prj.name}/Externals/includes",
     }
 
     libdirs

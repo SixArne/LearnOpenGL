@@ -13,6 +13,7 @@ public:
 	~Mesh();
 
 	void Create(const std::vector<GLfloat>& vertices, const std::vector<unsigned int>& indices);
+	void Create(GLfloat* vertices, int vSize, unsigned int* indices, int iSize);
 	void Render();
 	void Clear();
 
